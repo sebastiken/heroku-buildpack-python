@@ -5,7 +5,7 @@ if [ -f buildout.cfg ]; then
     puts-step "Found buildout.cfg, running buildout"
 
     puts-step "Read BOOTSTRAP_PY_URL from env vars, or use default"
-    if [ -f $BOOTSTRAP_PY_URL ]; then
+    if [ -z $BOOTSTRAP_PY_URL ]; then
         export "BOOTSTRAP_PY_URL=$(cat $BOOTSTRAP_PY_URL)"
         puts-step "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}"
     else
