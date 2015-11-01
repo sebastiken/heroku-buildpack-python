@@ -6,7 +6,6 @@ if [ -f buildout.cfg ]; then
 
     puts-step "Read BOOTSTRAP_PY_URL from env vars, or use default"
     if [ -z $BOOTSTRAP_PY_URL ]; then
-        export "BOOTSTRAP_PY_URL=$(cat $BOOTSTRAP_PY_URL)"
         puts-step "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}"
     else
         export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/2/bootstrap.py"
