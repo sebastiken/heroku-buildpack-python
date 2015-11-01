@@ -12,13 +12,13 @@ if [ -f buildout.cfg ]; then
         puts-step "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}"
     fi
 
-#    puts-env "Read BUILDOUT_CFG from env vars, or use default"
-#    if [ -z $BUILDOUT_CFG ]; then
-#        puts-env "Found ${BUILDOUT_CFG}"
-#    else
-#        export "BUILDOUT_CFG=buildout.cfg"
-#        puts-env "Using default: buildout.cfg"
-#    fi
+    puts-env "Read BUILDOUT_CFG from env vars, or use default"
+    if [ -z $BUILDOUT_CFG ]; then
+        export "BUILDOUT_CFG=buildout.cfg"
+        puts-env "Using default: buildout.cfg"
+    else
+        puts-env "Found ${BUILDOUT_CFG}"
+    fi
 
     puts-step "Read BUILDOUT_VERBOSITY from env vars, or use default"
     if [ -z $BUILDOUT_VERBOSITY ]; then
