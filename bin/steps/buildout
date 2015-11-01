@@ -2,15 +2,15 @@ set +e
 
 puts-step "Step buildout"
 if [ -f buildout.cfg ]; then
-    puts-steps "Found buildout.cfg, running buildout"
+    puts-step "Found buildout.cfg, running buildout"
 
-    puts-steps "Read BOOTSTRAP_PY_URL from env vars, or use default"
+    puts-step "Read BOOTSTRAP_PY_URL from env vars, or use default"
     if [ -f $BOOTSTRAP_PY_URL ]; then
         export "BOOTSTRAP_PY_URL=$(cat $BOOTSTRAP_PY_URL)"
-        puts-steps "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}"
+        puts-step "Use custom bootstrap.py: ${BOOTSTRAP_PY_URL}"
     else
         export "BOOTSTRAP_PY_URL=http://downloads.buildout.org/2/bootstrap.py"
-        puts-steps "Use default bootstrap.py: ${BOOTSTRAP_PY_URL}"
+        puts-step "Use default bootstrap.py: ${BOOTSTRAP_PY_URL}"
     fi
 
 #    puts-env "Read BUILDOUT_CFG from env vars, or use default"
@@ -29,10 +29,10 @@ if [ -f buildout.cfg ]; then
         puts-env "Use default buildout verbosity"
     fi
 
-    puts-steps "Init buildout"
+    puts-step "Init buildout"
     curl -OL "${BOOTSTRAP_PY_URL}"
     python bootstrap.py -c $BUILDOUT_CFG
-    puts-steps "Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
+    puts-step "Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
     bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
 fi
