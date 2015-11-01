@@ -1,5 +1,6 @@
 set +e
 
+puts-step "Step buildout"
 if [ -f buildout.cfg ]; then
     puts-steps "Found buildout.cfg, running buildout"
 

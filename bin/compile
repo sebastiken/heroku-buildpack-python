@@ -181,10 +181,10 @@ source $BIN_DIR/steps/gdal
 # Install dependencies with Pip.
 source $BIN_DIR/steps/pip-install
 
-# Django collectstatic support.
-sub-env $BIN_DIR/steps/collectstatic
-
 # Buildout support.
+source $BIN_DIR/steps/buildout
+
+# Django collectstatic support.
 sub-env $BIN_DIR/steps/collectstatic
 
 # ### Finalize
