@@ -184,6 +184,8 @@ source $BIN_DIR/steps/pip-install
 # Django collectstatic support.
 sub-env $BIN_DIR/steps/collectstatic
 
+# Buildout support.
+sub-env $BIN_DIR/steps/collectstatic
 
 # ### Finalize
 #
