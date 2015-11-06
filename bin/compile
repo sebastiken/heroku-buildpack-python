@@ -20,7 +20,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 
-CACHED_DIRS=".heroku $BIN_DIR/parts"
+CACHED_DIRS=".heroku /app/parts"
 
 # Static configurations for virtualenv caches.
 VIRTUALENV_LOC=".heroku/venv"
