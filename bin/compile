@@ -20,7 +20,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 
-CACHED_DIRS=".heroku parts"
+CACHED_DIRS=".heroku parts eggs"
 
 # Static configurations for virtualenv caches.
 VIRTUALENV_LOC=".heroku/venv"
@@ -147,6 +147,8 @@ bpwatch stop clear_old_venvs
 bpwatch start restore_cache
   for dir in $CACHED_DIRS; do
     echo "Cached dir: " $dir
+    echo "Copy from: " $CACHE_DIR/$dir
+    echo "Copy to: " `pwd`
     cp -R $CACHE_DIR/$dir . &> /dev/null || true
   done
 bpwatch stop restore_cache
