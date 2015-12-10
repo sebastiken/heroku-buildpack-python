@@ -34,7 +34,6 @@ if [ -f buildout.cfg ]; then
     puts-step "Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
     bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
-
     cat <<EOF > "$BUILD_DIR/bin/env_wrapper"
     #!/usr/bin/env bash
     set -e
@@ -59,7 +58,8 @@ if [ -f buildout.cfg ]; then
     CMD=\$1
     shift
     /app/bin/"\$CMD" "\$@" --xmlrpc-port=\$PORT
-    EOF
+EOF
+
     chmod 755 "$BUILD_DIR/bin/env_wrapper"
 
 fi
