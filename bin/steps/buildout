@@ -34,4 +34,35 @@ if [ -f buildout.cfg ]; then
     puts-step "Run bin/buildout -c ${BUILDOUT_CFG} ${BUILDOUT_VERBOSITY}"
     bin/buildout -c $BUILDOUT_CFG $BUILDOUT_VERBOSITY
 
+    cat <<EOF > "$BUILD_DIR/bin/env_wrapper"
+#!/usr/bin/env bash
+set -e
+DATABASE_USER=\$(echo \$DATABASE_URL | tr ":" "\n" | tr "/" "\n" | tr "@" "\n" | sed -n '4p')
+DATABASE_PWD=\$(echo \$DATABASE_URL | tr ":" "\n" | tr "/" "\n" | tr "@" "\n" | sed -n '5p')
+DATABASE_HOST=\$(echo \$DATABASE_URL | tr ":" "\n" | tr "/" "\n" | tr "@" "\n" | sed -n '6p')
+DATABASE_PORT=\$(echo \$DATABASE_URL | tr ":" "\n" | tr "/" "\n" | tr "@" "\n" | sed -n '7p')
+PORT=\${PORT:=5000}
+if [ ! -z \$DBS ]; then
+  DATABASE=\$DBS
+else
+  DATABASE=\$(echo \$DATABASE_URL | tr ":" "\n" | tr "/" "\n" | tr "@" "\n" | sed -n '8p')
+fi
+EMAIL_FROM=\${EMAIL_FRON:=False}
+sed -i 's|ENV_DB_PWD|'\$DATABASE_PWD'|g' /app/etc/openerp.cfg
+sed -i 's|ENV_DB_PORT|'\$DATABASE_PORT'|g' /app/etc/openerp.cfg
+sed -i 's|ENV_DB_HOST|'\$DATABASE_HOST'|g' /app/etc/openerp.cfg
+sed -i 's|ENV_DB_USER|'\$DATABASE_USER'|g' /app/etc/openerp.cfg
+sed -i 's|ENV_DB_NAME|'\$DATABASE'|g' /app/etc/openerp.cfg
+sed -i 's|ENV_EMAIL_FROM|'\$EMAIL_FROM'|g' /app/etc/openerp.cfg
+
+# Quitar chequeo de usuario postgres
+sed -i 's/    check_postgres_user()/    print "skipping postgres user check"/g' parts/odoo/openerp/cli/server.py
+
+CMD=\$1
+shift
+/app/bin/"\$CMD" "\$@" --xmlrpc-port=\$PORT
+EOF
+
+    chmod 755 "$BUILD_DIR/bin/env_wrapper"
+
 fi
