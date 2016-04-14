@@ -20,7 +20,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 
-CACHED_DIRS=".heroku"
+CACHED_DIRS=".heroku parts eggs"
 
 # Static configurations for virtualenv caches.
 VIRTUALENV_LOC=".heroku/venv"
